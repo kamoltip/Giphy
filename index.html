@@ -10,7 +10,7 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	color: skyblue;
+	color: red;
 }
 form{
 	display: flex;
@@ -23,25 +23,49 @@ h1{
 	width:  100%;
 	color: orange;
 	background-color: black;
-	border-radius: 25%;
+	border-radius: 30%;
 	font-size: 200%;
 	display: flex;
 	justify-content: center;
 }
 #giphyView{
-	padding: 20%;
 	width: 100%;
-	background-color: black;
 	border-radius: 10%;
 	margin-bottom: 5%;
+	padding: 20%;
+	border:2px solid black;
+	border-radius: 5%;
+	box-shadow: 5px 3px 8px grey;
+	background-image: url("http://graffies.com/wp-content/uploads/2014/03/iPhone-6-wallpapers-backgrounds-iphone6-wallpapers-backgrounds-45.jpg");
+	background-size: 35%;
+	background-repeat: repeat-x;
+}
+#gifView{
+	display: flex;
+	justify-content: center;
+}
+#buttonView{
+	display: flex;
+	justify-content: center;
 }
 button{
 	color: red;
+}
+
+#addGif{
+	background-color: black;
+	outline-color: red;
 }
 body{
 	padding-right: 10%;
 	padding-left: 10%;
 }
+ button,
+    div,
+    form,
+    input {
+      margin: 5px;
+    }
 </style>
 <body>
 	<div class="container">
@@ -49,31 +73,58 @@ body{
 		<h1>GIPHY</h1>
 	
 
-		
+	
 		<form>	
-			<input type="text" name="value" id="value">
-			<button type="submit" class="btn btn-default button">GO!</button>
+			<label for="gifLabel"></label>
+			<input type="text" id="gifInput">
+			<input type="submit" id="addGif" value="Go!!">
 		</form>
+	
 
 		<div id="buttonView"></div>
-		<div id="giphyView"></div>
-		
 
-		
+	<section id="gifView">
+		<div id="giphyView"></div>
+	</section>
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript">
-		var queryURL = "http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC";
-    $.ajax({
-      url: queryURL,
-      method: 'GET'
-    }).done(function(response) {
-      console.log(response);
-    });
 
+	var gif = ["dogs","cats","whale","bear","kangaroo","camel"];
+	// function displayGif(){
 
+// 		var giphy = $(this).attr("data-name");
+// 		var queryURL = "http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC";
+//     $.ajax({
+//       url: queryURL,
+//       method: 'GET'
+//     }).then(function(response) {
+//       $("#giphyView").html(JSON.stringify(response));
+//     });
 
-	</script>
-	</div>
+// }
 
-</body>
-</html>
+function renderButton(){
+	$("#buttonView").empty();
+	for (var i = 0; i < gif.length; i++) {
+		var a = $("<button>");
+		a.addClass("gifButton");
+		a.text(gif[i]);
+		$("#buttonView").append(a);
+
+	}
+}
+
+	$("#addGif").on("click", function(event){
+		event.preventDefault();
+		var renderGif = $("#gifInput").val().trim();
+		gif.push(renderGif);
+		renderButton();
+
+	});
+		$(document).on("click",".gifButton","displayGif");
+
+ 	</script>
+ 	</div>
+
+ </body>
+ </html>
